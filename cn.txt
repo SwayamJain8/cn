@@ -1,0 +1,124 @@
+do sh ip int brief
+==============================
+
+router eigrp 1008 (same)
+network Serial0.x.x.0
+network Serial1.x.x.0
+network Own.x.x.0
+do show ip route
+
+D
+D
+
+==============================
+
+router bgp 1008 (diff)
+neighbor Samne1.x.x.y remote-as y008
+neighbor Samne2.x.x.z remote-as z008
+network Own.x.x.0 mask 255.255.255.0
+do show ip bgp summary
+do show ip route
+
+B
+B
+
+=============================
+
+router ospf 1 (same)
+network Aaju.x.x.0 0.255.255.255 area 0
+network Baju.x.x.0 0.255.255.255 area 0
+network Own.x.x.0 0.0.0.255 area 0
+do show ip ospf neighbor
+do show ip route
+
+O
+O
+
+============================
+
+Telnet
+
+Router 0
+
+enable secret pass
+username user1 password pwd1
+username user2 password pwd2
+username user3 password pwd3
+line vty 0 1
+password pass
+login local
+transport input telnet
+
+Any PC
+
+telnet 192.x.10.1
+user1
+pwd1
+Router -> en
+pass
+show user
+
+--------
+
+SSH
+
+Router 1
+
+hostname h1
+enable secret password
+ip domain name n1
+crypto key generate rsa
+	-> 1024
+line vty 0 1
+transport input ssh
+login local
+exit
+username user1 password pwd1
+username user2 password pwd2
+username user3 password pwd3
+
+Any PC
+
+ssh -l user1 192.x.20.1
+pwd1
+
+-----
+
+FTP
+
+dir
+ftp 192.x.10.2
+username
+pass
+create file **
+put file name
+dir
+
+dir
+ftp 192.x.10.2
+username
+pass
+get file name
+dir
+
+
+===========================
+
+ip access-list standard R0
+reamrk ACL on Router0
+permit host x.x.x.x
+permit host x.x.x.x
+interface g0/0/0
+ip access-group R0 out
+do write
+
+
+ip access-list extended R1
+reamrk ACL on Router1
+permit ip 192.8.10.0 0.0.0.255 any
+permit ip host 192.8.30.11 host 192.8.20.11
+"
+"
+interface g0/0/0
+ip access-group R1 out
+do write
