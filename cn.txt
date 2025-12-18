@@ -1,4 +1,6 @@
 do sh ip int brief
+
+https://shorturl.at/HiTfn
 ==============================
 
 router eigrp 1008 (same)
@@ -121,4 +123,5 @@ permit ip host 192.8.30.11 host 192.8.20.11
 "
 interface g0/0/0
 ip access-group R1 out
+
 do write
